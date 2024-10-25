@@ -27,18 +27,19 @@
             <h1>Лабораторная работа №9</h1>
             <?php
             $x = -10;
-            $encounting = 1000;
-            $step = 2;
+            $encounting = 100;
+            $step = 1;
             $min_value = -1000;
             $max_value = 1000;
-            $type = 'D';
+            $type = 'Маркированный список';
             $values = [];
 
             function calculate($x)
             {
                 if ($x <= 10) {
                     return round(3 * $x + 9, 3);
-                } elseif ($x > 10 && $x < 20) {
+                } 
+                elseif ($x > 10 && $x < 20) {
                     if ($x == 11) {
                         return "error";
                     }
@@ -50,39 +51,66 @@
 
             for ($i = 0; $i < $encounting; $i++, $x += $step) {
                 $f = calculate($x);
-
-                if ($f == "error" || $f < $min_value || $f > $max_value) {
+            
+                if ($f == "error") {
+                    switch ($type) {
+                        case 'Простая верстка текстом':
+                            echo "f($x) = error<br>";
+                            break;
+                        case 'Маркированный список':
+                            if ($i == 0) echo "<ul>";
+                            echo "<li>f($x) = error</li>";
+                            echo "</ul>";
+                            break;
+                        case 'Нумерованный список':
+                            if ($i == 0) echo "<ol>";
+                            echo "<li>f($x) = error</li>";
+                            echo "</ol>";
+                            break;
+                        case 'Табличная верстка':
+                            if ($i == 0) echo "<table border='1' style='border-collapse: collapse; margin-top: 10px'><tr><th>№</th><th>x</th><th>f(x)</th></tr>";
+                            echo "<tr><td>" . ($i + 1) . "</td><td>$x</td><td>error</td></tr>";
+                            echo "</table>";
+                            break;
+                        case 'Блочная верстка':
+                            echo "<div style='float: left; border: 2px solid red; margin-top: 10px; margin-right: 8px;'>f($x) = error</div>";
+                            break;
+                    }
                     break;
                 }
-
-                $values[] = $f; // Добавление значения функции в массив
+            
+                if ($f < $min_value || $f > $max_value) {
+                    break;
+                }
+            
+                $values[] = $f;
             
                 switch ($type) {
-                    case 'A':
+                    case 'Простая верстка текстом':
                         echo "f($x)=$f<br>";
                         break;
-                    case 'B':
+                    case 'Маркированный список':
                         if ($i == 0)
                             echo "<ul>";
                         echo "<li>f($x)=$f</li>";
                         if ($i == $encounting - 1)
                             echo "</ul>";
                         break;
-                    case 'C':
+                    case 'Нумерованный список':
                         if ($i == 0)
                             echo "<ol>";
                         echo "<li>f($x)=$f</li>";
                         if ($i == $encounting - 1)
                             echo "</ol>";
                         break;
-                    case 'D':
+                    case 'Табличная верстка':
                         if ($i == 0)
                             echo "<table border='1' style='border-collapse: collapse; margin-top: 10px'><tr><th>№</th><th>x</th><th>f(x)</th></tr>";
                         echo "<tr><td>" . ($i + 1) . "</td><td>$x</td><td>$f</td></tr>";
                         if ($i == $encounting - 1)
                             echo "</table>";
                         break;
-                    case 'E':
+                    case 'Блочная верстка':
                         echo "<div style='float: left; border: 2px solid red; margin-top: 10px; margin-right: 8px;'>f($x)=$f</div>";
                         break;
                 }
